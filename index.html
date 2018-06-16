@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>巴迪师专题</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<meta content="yes" name="apple-mobile-web-app-capable"/>
+		<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+		<meta content="telephone=no" name="format-detection"/>
+		<link rel="stylesheet" href="css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" href="css/demo.css" />
+		<link rel="stylesheet" href="css/ydui.css" />
+		<link rel="stylesheet" href="css/reset.min.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<script type="text/javascript" src="js/swiper-3.4.2.min.js" ></script>
+		<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+		<script>
+		        (function(doc, win) {
+		            var docEl = doc.documentElement,
+		                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+		                recalc = function() {
+		                    var clientWidth = docEl.clientWidth;
+		                    if(!clientWidth) return;
+		                    if(clientWidth >= 750) {
+		                        docEl.style.fontSize = '100px';
+		                    } else {
+		                        docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+		                    }
+		                };
+		
+		            if(!doc.addEventListener) return;
+		            win.addEventListener(resizeEvt, recalc, false);
+		            doc.addEventListener('DOMContentLoaded', recalc, false);
+		        })(document, window);
+		    </script>
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="js/vue.min.js" ></script>
+		<script type="text/javascript" src="js/scrollReveal.js" ></script>
+	</head>
+	<body>
+		<div class="delete1" hidden="hidden"></div>
+		<div id="app">
+			<div class="index">
+				<div class="swiper-container swiper-container-index">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide" v-for="(item,index) in banners">
+							<img :src="item" />
+						</div>
+					</div>
+					<div class="swiper-button-prev swiper-button-prev3"></div>
+					<div class="swiper-button-next swiper-button-next3"></div>
+					<div class="swiper-pagination"></div>
+				</div>
+			</div>
+			<div class="playVideo" data-scroll-reveal="enter top and move 50px over 1.0s">
+				<div class="btnBox">
+					<div>
+						<button>播放视频</button>
+					</div>
+				</div>
+			</div>
+			<!--适用人群-->
+			<div class="people bottom5">
+				<div class="bigTitle">
+					<div class="btTop"  data-scroll-reveal="enter top and move 50px over 1.0s">
+						<span>推荐适用人群</span>
+					</div>
+					<div class="btBottom" data-scroll-reveal="enter top and move 50px over 1.0s">
+						<p>RECOMMENDED FOR PEOPLE</p>
+					</div>
+					<div class="greenTitle" data-scroll-reveal="enter bottom and move 50px over 1.0s">
+						<p>空气净化专家，健康家庭的小卫士</p>
+					</div>
+				</div>
+				<div class="bottom51Box">
+					<div class="bottom51" v-for="(item,index) in enjoyPeople">
+						<div class="bottom511" :data-scroll-reveal="item.move">
+							<img :src="item.src" />
+						</div>
+						<div class="bottom512" :data-scroll-reveal="item.move1">
+							<p>{{item.title}}</p>
+							<p>&nbsp;</p>
+							<p>{{item.p1}}</p>
+							<p>{{item.p2}}</p>
+							<p>{{item.p3}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--系列产品-->
+			<div class="series">
+				<div class="bigTitle" data-scroll-reveal="enter top and move 50px over 1.0s">
+					<div class="btTop">
+						<span>板材解读</span>
+					</div>
+					<div class="btBottom" >
+						<p>PLATE INTERPRETATION</p>
+					</div>
+				</div>
+				<div class="produceJudge" :class="{'pjhas':mpStatus}" data-scroll-reveal="enter bottom and move 50px over 1.0s">
+					<span class="floatl" @click="pjOne">铝基材</span>
+					<span class="floatr" @click="pjTwo">铝蜂窝板</span>
+					<div class="clearBoth"></div>
+				</div>
+				<div class="swiper-container swiper-container-produce1" v-show="!mpIndex">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide" v-for="(item,index) in MoreProduce[0]">
+							<div class="proImg">
+								<img :src="item.banner" />
+							</div>
+							<div class="proBottom">
+								<div class="pbLeft">
+									<div class="pblImg">
+										<img :src="item.img"/>
+									</div>
+								</div>
+								<div class="pbRight">
+									<div class="pblContent">
+										<div>
+											<span class="pblTitle">{{item.title}}<span>{{item.enTitle}}</span></span>
+										</div>
+										<ul>
+											<li v-for="(its,i) in item.text">
+												<p>{{its}}</p>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-button-prev swiper-button-prev1"></div>
+					<div class="swiper-button-next swiper-button-next1"></div>
+				</div>
+				<div class="swiper-container swiper-container-produce2" v-show="mpIndex">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide" v-for="(item,index) in MoreProduce[1]">
+							<div class="proImg">
+								<img :src="item.banner" />
+							</div>
+							<div class="proBottom">
+								<div class="pbLeft">
+									<div class="pblImg">
+										<img :src="item.img"/>
+									</div>
+								</div>
+								<div class="pbRight">
+									<div class="pblContent">
+										<div>
+											<span class="pblTitle">{{item.title}}<span>{{item.enTitle}}</span></span>
+										</div>
+										<ul>
+											<li v-for="(its,i) in item.text">
+												<p>{{its}}</p>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="swiper-button-prev swiper-button-prev2"></div>
+					<div class="swiper-button-next swiper-button-next2"></div>
+				</div>
+			</div>
+			<!--产品1-->
+			<div class="knowMore">
+				<div class="knTop">
+					<img :src="produce1.src" data-scroll-reveal="enter top and move 50px over 1.0s"/>
+					<div class="knTopBox knTopBox1" data-scroll-reveal="enter right and move 50px over 1.0s">
+						<div>
+							<ul>
+								<li>{{produce1.zhTitle}}</li>
+								<li>{{produce1.enTitle}}</li>
+								<li></li>
+								<li>{{produce1.chTitle}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="knBottom knBottom1">
+					<img src="img/bottom33.png" data-scroll-reveal="enter bottom and move 50px over 1.0s" />
+					<div class="knbBox">
+						<div class="knbTitle knbTitle1">
+							<ul>
+								<li>
+									<p data-scroll-reveal="enter left and move 50px over 1.0s">{{produce1.smallTitle}}</p>
+								</li>
+								<li>
+									<p data-scroll-reveal="enter right and move 50px over 1.0s">&nbsp;<span>{{produce1.smallText}}</span></p>
+								</li>
+							</ul>
+						</div>
+						<div class="knbContent knbContent1" data-scroll-reveal="enter bottom and move 50px over 1.0s" >
+							<p v-for="(item,index) in produce1.p" >{{item}}</p>
+						</div>
+						<div class="knbImgBox knbImgBox2">
+							<div v-for="(item,index) in produce1.imgList">
+								<img :src="item.img" :data-scroll-reveal="item.move"  />
+							</div>
+						</div>
+					</div>
+					<div class="btnBox btnBox1" data-scroll-reveal="enter bottom and move 50px over 1.0s" >
+						<div>
+							<button>了解更多</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--产品2-->
+			<div class="knowMore">
+				<div class="knTop">
+					<img :src="produce2.src" data-scroll-reveal="enter top and move 50px over 1.0s"/>
+					<div class="knTopBox" data-scroll-reveal="enter right and move 50px over 1.0s">
+						<div>
+							<ul>
+								<li>{{produce2.zhTitle}}</li>
+								<li>{{produce2.enTitle}}</li>
+								<li></li>
+								<li>{{produce2.chTitle}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="knBottom">
+					<img src="img/bottom27.png" data-scroll-reveal="enter bottom and move 50px over 1.0s"/>
+					<div class="knbBox">
+						<div class="knbTitle">
+							<ul>
+								<li>
+									<p data-scroll-reveal="enter left and move 50px over 1.0s">{{produce2.smallTitle}}</p>
+								</li>
+								<li>
+									<p data-scroll-reveal="enter right and move 50px over 1.0s">&nbsp;<span>{{produce2.smallText}}</span></p>
+								</li>
+							</ul>
+						</div>
+						<div class="knbContent" data-scroll-reveal="enter bottom and move 50px over 1.0s">
+							<p v-for="(item,index) in produce2.p" :class="{noIndent:1==index}">{{item}}</p>
+						</div>
+						<div class="knbImgBox">
+							<div v-for="(item,index) in produce2.imgList">
+								<img :src="item.img" :data-scroll-reveal="item.move" />
+							</div>
+						</div>
+					</div>
+					<div class="btnBox" data-scroll-reveal="enter bottom and move 50px over 1.0s" >
+						<div>
+							<button>了解更多</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--板材解读-->
+			<div class="bottom6">
+				<div class="bigTitle">
+					<div class="btTop" data-scroll-reveal="enter top and move 50px over 1.0s">
+						<span>板材解读</span>
+					</div>
+					<div class="btBottom" data-scroll-reveal="enter top and move 50px over 1.0s">
+						<p>PLATE INTERPRETATION</p>
+					</div>
+					<div class="greenTitle" data-scroll-reveal="enter bottom and move 50px over 1.0s">
+						<p>自然进化论 ，回归原生态</p>
+					</div>
+				</div>
+				<div class="bottom61" data-scroll-reveal="enter top and move 50px over 1.0s">
+					<img src="img/bottom20.png"/>
+				</div>
+				<div class="btnBox" data-scroll-reveal="enter bottom and move 50px over 1.0s">
+					<div>
+						<button>了解更多</button>
+					</div>
+					
+				</div>
+			</div>
+			<!--体验巴迪师-->
+			<div class="bottom5">
+				<div class="bigTitle">
+					<div class="btTop" data-scroll-reveal="enter top and move 50px over 1.0s">
+						<span>体验巴迪斯  </span>
+					</div>
+					<div class="btBottom" data-scroll-reveal="enter top and move 50px over 1.0s">
+						<p>EXPERIENCE BARDISS</p>
+					</div>
+					<div class="greenTitle" data-scroll-reveal="enter bottom and move 50px over 1.0s">
+						<p>十年专业服务，赢得千万家选择</p>
+					</div>
+				</div>
+				<div class="superText bodyBox" data-scroll-reveal="enter top and move 50px over 1.0s">
+					<p>{{enjoyText}}</p>
+				</div>
+				<div class="bottom51Box">
+					<div class="bottom51" v-for="(item,index) in enjoy">
+						<div class="bottom511" :data-scroll-reveal='item.move'>
+							<img :src="item.src" />
+						</div>
+						<div class="bottom512" :data-scroll-reveal='item.move1'>
+							<p>{{item.title}}</p>
+							<p>&nbsp;</p>
+							<p>{{item.p1}}</p>
+							<p>{{item.p2}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--尊贵定制-->
+			<div class="bottom4">
+				<div class="bigTitle">
+					<div class="btTop" data-scroll-reveal="enter top and move 50px over 1.0s">
+						<span>尊贵定制 </span>
+					</div>
+					<div class="btBottom" data-scroll-reveal="enter top and move 50px over 1.0s">
+						<p>PREMIUM CUSTOM</p>
+					</div>
+					<div class="greenTitle" data-scroll-reveal="enter bottom and move 50px over 1.0s">
+						<p>专业优质定制，健康装修首选</p>
+					</div>
+				</div>
+				<div class="superText bodyBox" data-scroll-reveal="enter top and move 50px over 1.0s">
+					<p>{{superText}}</p>
+				</div>
+				<div class="bottom41">
+					<div class="bottom422" v-for="(item,index) in superOrder" :data-scroll-reveal='item.move'>
+						<div class="bottom2Left">
+							<img :src="item.src" />
+						</div>
+						<div class="bottom2Right">
+							<p class="bottom4Title">{{item.title}}</p>
+							<p>{{item.content}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--品质保证-->
+			<div class="bottom3">
+				<div class="bigTitle">
+					<div class="btTop" data-scroll-reveal="enter top and move 50px over 1.0s">
+						<span>品质保证</span>
+					</div>
+					<div class="btBottom" data-scroll-reveal="enter top and move 50px over 1.0s">
+						<p>QUALITY ASURANCE</p>
+					</div>
+					<div class="greenTitle" data-scroll-reveal="enter bottom and move 50px over 1.0s">
+						<p>品质传承，匠心筑造质感生活</p>
+					</div>
+				</div>
+				<div class="bottom31" data-scroll-reveal="enter top and move 50px over 1.0s">
+					<img src="img/bottom8.png" />
+				</div>
+			</div>
+			<!--关于巴迪师-->
+			<div class="bottom2">
+				<div class="bigTitle">
+					<div class="btTop" data-scroll-reveal="enter top and move 50px over 1.0s">
+						<span>关于巴迪斯</span>
+					</div>
+					<div class="btBottom" data-scroll-reveal="enter top and move 50px over 1.0s">
+						<p>ABOUT BARDISS</p>
+					</div>
+					<div class="greenTitle" data-scroll-reveal="enter bottom and move 50px over 1.0s">
+						<p>幸福缔造者，千万家居必备好选择</p>
+					</div>
+				</div>
+				<div class="bottom21 ">
+					<div class="bottom211" v-for="(item,index) in about" >
+						<div class="bottom21Title bodyBox" :data-scroll-reveal="item.move">
+							<p>{{item.title}}</p>
+						</div>
+						<div class="bottom21Content bodyBox" :data-scroll-reveal="item.move">
+							<p>{{item.content}}</p>
+						</div>
+						<div class="bottom21Img">
+							<div v-for="(item,index) in item.imgList"><img :src="item"/> </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--加盟巴迪师-->
+			<div class="bottom1">
+				<div class="bottom12 bodyBox">
+					<ul>
+						<li>
+							<div class="bigTitle">
+								<div class="btTop" data-scroll-reveal="enter top and move 50px over 1.0s">
+									<span>加盟巴迪斯</span>
+								</div>
+								<div class="btBottom" data-scroll-reveal="enter top and move 50px over 1.0s">
+									<p>INTERPRETATION BARDISS</p>
+								</div>
+								<div  class="greenTitle" data-scroll-reveal="enter bottom and move 50px over 1.0s">
+									<p>强者携手同行</p>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="inputBox">
+								<input placeholder="姓名" type="text"/>
+							</div>
+						</li>
+						<li>
+							<div class="inputBox">
+								<input placeholder="联系" type="number"/>
+							</div>
+						</li>
+						<li>
+							<div class="inputBox">
+								<input placeholder="地区" id="city" />
+							</div>
+						</li>
+						<li>
+							<div class="submit">
+								<button>提交</button>
+							</div>
+						</li>
+						<li>
+							<div class="message" data-scroll-reveal="enter top and move 50px over 1.0s">
+								<p class="msgTitle">体验地址</p>
+								<p>{{address}}</p>
+							</div>
+							<div class="message" data-scroll-reveal="enter bottom and move 50px over 1.0s">
+								<p class="msgTitle">咨询电话</p>
+								<a :href="'tel:'+phone">{{phone}}</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="bottom11">
+					<img src="img/bottom1.png" />
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/ydui.citys.js" ></script>
+		<script type="text/javascript" src="js/ydui.js" ></script>
+		<script>
+			$(function(){
+				$('.delete1').prevAll().remove();
+				$('.delete2').nextAll().remove();
+				$('#city').on('click',function(){
+					$(this).blur();
+				});
+				//选择省市区
+				!function () {
+			        var $target = $('#city');
+			
+			        $target.citySelect();
+			
+			        $target.on('click', function (event) {
+			            event.stopPropagation();
+			            $target.citySelect('open');
+			        });
+			
+			        $target.on('done.ydui.cityselect', function (ret) {
+			            $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+			        });
+			    }();
+			});
+			var app = new Vue({
+	   			el:'#app',
+		   		data:{
+	   			    banners:['img/index1.png','img/index2.png','img/index3.png'],
+                    enjoyPeople:[
+                        {
+                        src:'img/middle1.png',
+                        title:'老人/孝心',
+                        p1:'巴迪斯负离子生态吊顶',
+                        p2:'让你的孝心更放心',
+                        move:'enter left and move 50px over 1.0s',
+                        move1:'enter right and move 50px over 1.0s'
+                    },{
+                        src:'img/middle2.png',
+                        title:'孩子/责任',
+                        p1:'巴迪斯负离子生态吊顶',
+                        p2:'自动释放负离子',
+						p3:'帮你打跑细菌小怪兽',
+                        move:'enter right and move 50px over 1.0s',
+                        move1:'enter left and move 50px over 1.0s'
+                    },{
+                        src:'img/middle3.png',
+                        title:'采购安装',
+                        p1:'巴迪斯负离子生态吊顶',
+                        p2:'多一缕新鲜空气',
+                        p3:'保护小小的ta',
+                        move:'enter left and move 50px over 1.0s',
+                        move1:'enter right and move 50px over 1.0s'
+                    },{
+                        src:'img/middle4.png',
+                        title:'朋友/健康',
+                        p1:'巴迪斯负离子生态吊顶',
+                        p2:'不需谨言慎行',
+                        p3:'尽情森呼吸',
+                        move:'enter right and move 50px over 1.0s',
+                        move1:'enter left and move 50px over 1.0s'
+                    }],
+	   			    //产品系列
+                    mySwiper1:null,
+                    mySwiper2:null,
+                    mySwiper3:null,
+                    prolist:[],
+                    mpStatus:false,
+					mpIndex:0,
+					MoreProduce:[
+                        [
+                            {
+                                banner:'img/pro1.png',
+                                img:'img/smallPro1.png',
+                                title:'莉娜',
+                                enTitle:'(Lina)',
+                                text:['尺寸 327 x 327 x 22mm','材质 0.6mm铝镁合金','适用 全屋定制']
+                            },
+							{
+                                banner:'img/pro2.png',
+                                img:'img/smallPro2.png',
+								title:'卡梵尼',
+								enTitle:'(Kafanni)',
+								text:['尺寸 490.5 x 490.5 x 22mm','材质 0.6mm铝镁合金','适用 全屋定制']
+							},
+                            {
+                                banner:'img/pro3.png',
+                                img:'img/smallPro3.png',
+                                title:'铂缇',
+                                enTitle:'(Boti)',
+                                text:['尺寸 490.5 x 490.5 x 22mm','材质 0.6mm铝镁合金','适用 全屋定制']
+                            },
+                            {
+                                banner:'img/pro4.png',
+                                img:'img/smallPro4.png',
+                                title:'铂兰',
+                                enTitle:'(Bolan)',
+                                text:['尺寸 327 x 327 x 22mm','材质 0.6mm铝镁合金','适用 全屋定制']
+                            },
+                            {
+                                banner:'img/pro5.png',
+                                img:'img/smallPro5.png',
+                                title:'瑟琳',
+                                enTitle:'(Selin)',
+                                text:['尺寸 490.5 x 490.5 x 22mm','材质 0.6mm铝镁合金','适用 全屋定制']
+                            },
+                            {
+                                banner:'img/pro6.png',
+                                img:'img/smallPro6.png',
+                                title:'欧妮娅',
+                                enTitle:'(Ouniya)',
+                                text:['尺寸 490.5 x 490.5 x 45mm','材质 0.6mm铝镁合金','适用 全屋定制']
+                            },
+                            {
+                                banner:'img/pro7.png',
+                                img:'img/smallPro7.png',
+                                title:'菲拉',
+                                enTitle:'(Fei La)',
+                                text:['尺寸 327 x 654 x 22mm','材质 0.6mm铝镁合金','适用 全屋定制']
+                            },
+                            {
+                                banner:'img/pro8.png',
+                                img:'img/smallPro8.png',
+                                title:'洛琳',
+                                enTitle:'(Luolin)',
+                                text:['尺寸 327 x 327 x 22mm','材质 0.6mm铝镁合金','适用 全屋定制']
+                            },
+                            {
+                                banner:'img/pro9.png',
+                                img:'img/smallPro9.png',
+                                title:'蔓妮',
+                                enTitle:'(Manni)',
+                                text:['尺寸 327 x 327 x 22mm','材质 0.6mm铝镁合金','适用 全屋定制']
+                            },
+                            {
+                                banner:'img/pro10.png',
+                                img:'img/smallPro10.png',
+                                title:'丹青',
+                                enTitle:'(Danqing)',
+                                text:['尺寸 327 x 327 x 22mm','材质 0.6mm铝镁合金','适用 全屋定制']
+                            }
+						],
+						[
+                            {
+                                banner:'img/pro11.png',
+                                img:'img/smallPro11.png',
+                                title:'素娟',
+                                enTitle:'(Sujuan)',
+                                text:['尺寸 654 x 1635 x 42mm','材质 7mm铝蜂窝板','适用 客厅 餐厅 书房']
+                            },
+                            {
+                                banner:'img/pro12.png',
+                                img:'img/smallPro12.png',
+                                title:'慕莎',
+                                enTitle:'(Musha)',
+                                text:['尺寸 490.5 x 981 x 42mm','材质 7mm铝蜂窝板','适用 客厅 餐厅 书房']
+                            }
+						]
+					],
+		   			//产品2
+		   			produce1:{
+		   				src:'img/bottom34.png',
+		   				zhTitle:'铝基材系列',
+		   				enTitle:'ALUMINUM  SUBSTRATE',
+		   				chTitle:'打造品质时尚家居',
+		   				smallTitle:'树立潮流方向',
+		   				smallText:'引领品质生活',
+		   				p:['亚光滚涂白技术呈现出细腻逼真的质感；将表面纹理层、负离子释放层、涂料层、铝铬化层、铝镁合金层、背涂保护层进行整合，打造一种新的绿色健康生态环保新材。',
+		   				'多面独立设计，拼出时尚个性，树立潮流方向，引领品质健康生活.'],
+		   				imgList:[
+                            {
+                                img: 'img/bottom29.png',
+                                move: 'enter top and move 50px over 1.0s'
+                            },
+							{
+                                img:'img/bottom30.png',
+                                move: 'enter bottom and move 50px over 1.0s'
+                        	},
+							{
+                                img:'img/bottom31.png',
+								move:'enter top and move 50px over 1.0s'
+                            },{
+                                img:'img/bottom32.png',
+                                move:'enter bottom and move 50px over 1.0s'
+                            }]
+		   			},
+		   			produce2:{
+		   				src:'img/bottom22.png',
+		   				zhTitle:'铝蜂窝板系列',
+		   				enTitle:'ALUMINUM  HONEYCOMB',
+		   				chTitle:'源于自然  美在自然',
+		   				smallTitle:'森之语',
+		   				smallText:'归真自然',
+		   				p:['运用表面装饰工艺（丝印、喷涂、覆','膜等），逼真大限度地呈现板材的细腻触感，展现板材本身的自然之美，同时设计线条简约、浑然质朴，满含着自然的意蕴，很好的表达了生活中的自然之美。'],
+		   				imgList:[{
+                            img: 'img/bottom23.png',
+                            move: 'enter top and move 50px over 1.0s'
+                        	},
+                            {
+                                img:'img/bottom24.png',
+                                move: 'enter bottom and move 50px over 1.0s'
+                            },
+                            {
+                                img:'img/bottom25.png',
+                                move:'enter top and move 50px over 1.0s'
+                            },{
+                                img:'img/bottom26.png',
+                                move:'enter bottom and move 50px over 1.0s'
+                            }]
+		   			},
+		   			//体验
+		   			enjoyText:'巴迪斯是业内首家真正意义上将生态概念赋予了集成吊顶产品的企业，秉承打造健康舒适新生活的主旨，在符合生态与健康要求的前提下，掌握核心科技，成功将负离子技术运用于集成吊顶，推出新型的负离子生态吊顶，创造健康自然环保的室内环境，还我们一个可以安心呼吸的空间。',
+		   			enjoy:[{
+		   				src:'img/bottom15.png',
+		   				title:'体验选配',
+		   				p1:'近千个产品的选配',
+		   				p2:'全天“星”级导购服务',
+                        move:'enter left and move 50px over 1.0s',
+                        move1:'enter right and move 50px over 1.0s'
+
+		   			},{
+		   				src:'img/bottom16.png',
+		   				title:'设计咨询',
+		   				p1:'专业顾问式导购咨询',
+		   				p2:'全屋一体化专业设计',
+                        move:'enter right and move 50px over 1.0s',
+                        move1:'enter left and move 50px over 1.0s'
+		   			},{
+		   				src:'img/bottom17.png',
+		   				title:'采购安装',
+		   				p1:'近千个产品的选配',
+		   				p2:'全天“星”级导购服务',
+                        move:'enter left and move 50px over 1.0s',
+                        move1:'enter right and move 50px over 1.0s'
+		   			},{
+		   				src:'img/bottom18.png',
+		   				title:'售后维护',
+		   				p1:'4小时快速反应服务',
+		   				p2:'1300+门店终身维护',
+                        move:'enter right and move 50px over 1.0s',
+                        move1:'enter left and move 50px over 1.0s'
+		   			}],
+		   			//定制
+		   			superText:'专属设计师私人订制，在线预约测量，家居色彩、风格搭配，更和谐。专为别墅大平层而尊贵定制，秉承皇室奢华大气的贵族气质.',
+		   			superOrder:[
+		   				{
+		   					src:'img/bottom9.png',
+		   					title:'在线预约',
+		   					content:'获取设计师定制方案',
+                            move:'enter left and move 50px over 1.0s'
+		   				},
+		   				{
+		   					src:'img/bottom10.png',
+		   					title:'免费报价',
+		   					content:'品质至上的报价体系',
+                            move:'enter right and move 50px over 1.0s'
+		   				},
+		   				{
+		   					src:'img/bottom11.png',
+		   					title:'免费测量',
+		   					content:'贴身上门测量',
+                            move:'enter left and move 50px over 1.0s'
+		   				},
+		   				{
+		   					src:'img/bottom12.png',
+		   					title:'免费安装',
+		   					content:'确保每一安装安全可靠',
+                            move:'enter right and move 50px over 1.0s'
+		   				},
+		   				{
+		   					src:'img/bottom13.png',
+		   					title:'免费设计',
+		   					content:'提供全屋整装设计方案',
+                            move:'enter left and move 50px over 1.0s'
+		   				},
+		   				{
+		   					src:'img/bottom14.png',
+		   					title:'终身维护',
+		   					content:'专业为您的使用保驾护航',
+                            move:'enter right and move 50px over 1.0s',
+		   				}
+		   			],
+		   			//关于
+		   			about:[
+		   				{
+		   					title:'企业一站式',
+		   					content:'巴迪斯是一家汇聚家装天花、集成电器、工程天花、异形天花及铝幕墙的专业性生产与营销服务于一体，同时运作国内与国际市场的综合型实力企业。',
+		   					imgList:[],
+                            move:'enter left and move 50px over 1.0s',
+		   				},
+		   				{
+		   					title:'核心优势',
+		   					content:'汇聚业界顶尖的研发团队，配置国内最专业的设备，每款产品都经过23道缜密生产工序、9项严密品质监控，确保每一细节都能体现出匠心精神和一丝不苟的追求.',
+		   					imgList:['img/bottom5.png','img/bottom6.png','img/bottom7.png'],
+                            move:'enter right and move 50px over 1.0s',
+		   				},
+		   				{
+		   					title:'全国1300+体验馆',
+		   					content:'全国1300多家连锁体验馆里，体验产品的多样化，近千个产品的选配服务，专业的设计服务，24小时“五心”级导购服务,感动无处不在。',
+		   					imgList:[],
+                            move:'enter left and move 50px over 1.0s',
+		   				},
+		   				{
+		   					title:'量屋定制健康系统',
+		   					content:'巴迪斯公司融合客厅、餐厅、卧室、厨房、卫生间、阳台、玄关和过道于一体，以全居设计风格，满足消费者对不同空间的使用需求，真正为您提供全居解决方案。',
+		   					imgList:[],
+                            move:'enter right and move 50px over 1.0s',
+		   				}
+		   			],
+		   			address:'广东省佛山市南海区里水得胜区军民路一环东1号',
+		   			phone:'400-8607-757',
+		   			status:0,
+		   			pop:false,
+		   		},
+		   		methods:{
+		   			getAward:function(){
+		   				this.pop = true;
+		   			},
+                    pjTwo:function(){
+		   			    var _this = this;
+                        _this.mpStatus = true;
+                        _this.mpIndex = 1;
+                        _this.prolist = _this.MoreProduce[1];
+                        if(!_this.mySwiper2)
+						{
+                            setTimeout(function () {
+                                _this.mySwiper2 = new Swiper('.swiper-container-produce2',{
+                                    loop:true,
+                                    autoplayDisableOnInteraction : false,
+                                    autoplay:5000,
+                                    prevButton:'.swiper-button-prev2',
+                                    nextButton:'.swiper-button-next2',
+                                })
+                            },200);
+						}
+
+                    },
+                    pjOne:function(){
+                        var _this = this;
+                        _this.mpStatus = false;
+                        _this.mpIndex = 0;
+                        _this.prolist = _this.MoreProduce[0];
+                    }
+		   		},
+		   		mounted:function(){
+                    var _this = this;
+                    _this.mySwiper1 = new Swiper('.swiper-container-produce1',{
+                        loop:true,
+                        autoplayDisableOnInteraction : false,
+                        autoplay:5000,
+                        prevButton:'.swiper-button-prev1',
+                        nextButton:'.swiper-button-next1',
+                    });
+                    $('.index').height($(window).height());
+                    _this.mySwiper3 = new Swiper('.swiper-container-index',{
+                        loop:true,
+                        prevButton:'.swiper-button-prev3',
+                        nextButton:'.swiper-button-next3',
+                        pagination : '.swiper-pagination',
+                        paginationClickable :true,
+                        autoplayDisableOnInteraction : false,
+						autoplay:5000
+                    });
+                    //开启滑动动画
+                    if(!(/msie [6|7|8|9]/i.test(navigator.userAgent))) {
+                        (function() {
+                            window.scrollReveal = new scrollReveal({
+                                reset: true
+                            });
+                        })();
+                    };
+		   		},
+				upDated:function () {
+
+                }
+		   	})
+		</script>
+		<div class="delete2" hidden="hidden"></div>
+	</body>
+</html>
