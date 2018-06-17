@@ -701,3 +701,82 @@ body{
         }
     }
 }
+.popWin{
+    position: fixed;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    transition: transform 0.2s linear;
+    -webkit-transition: transform 0.2s linear;
+    -moz--webkit-transition: transform 0.2s linear;
+
+    .swiper-container{
+        width: 100%;
+        height: 100%;
+        .swiper-slide{
+            width: 100%;
+            height: 100%;
+            background: url("../img/neiBack1.png") no-repeat left top;
+            background-size: 100% 100%;
+            -webkit-background-size: 100% 100%;
+            .produceImg{
+                width: 100%;
+                img{
+                    width: 100%;
+                }
+            }
+            .produceTitle p{
+                font-size: 0.4rem;
+                margin-top: -0.3rem;
+                text-align: center;
+                background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, from(rgb(34, 23, 20)), color-stop(0.45, rgb(150, 150, 150)), color-stop(0.46, rgb(34, 23, 20)), to(rgb(99, 99, 99)));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .propBox{
+                margin: 0.4rem 0 0.4rem;
+                p{
+                    font-size: 0.2rem;
+                    line-height: 0.36rem;
+                    color: #3f3f3f;
+                    text-align: center;
+                }
+            }
+            .proBar{
+                width: 1.16rem;
+                margin: 0 auto;
+                img{
+                    width: 100%;
+                }
+            }
+            .logo{
+                width: 2.0rem;
+                margin: 0.4rem auto;
+                img{
+                    width: 100%;
+                }
+            }
+        }
+        .swiper-slide:nth-child(2n)
+        {
+            background-image: url("../img/neiBack2.png");
+        }
+    }
+    .closeBtn{
+        position: absolute;
+        width: 0.64rem;
+        height: 0.64rem;
+        left: 50%;
+        margin-left: -0.32rem;
+        bottom: 0.4rem;
+        background: url("../img/close.png") no-repeat left top;
+        background-size: 100% 100%;
+        z-index: 999;
+    }
+    .swiper-pagination-bullet-active {
+        opacity: 1;
+        background: #3f3f3f;
+    }
+}

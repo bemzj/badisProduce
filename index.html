@@ -8,12 +8,15 @@
 		<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
 		<meta content="telephone=no" name="format-detection"/>
 		<link rel="stylesheet" href="css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" href="css/animate.min.css" />
 		<link rel="stylesheet" href="css/demo.css" />
 		<link rel="stylesheet" href="css/ydui.css" />
 		<link rel="stylesheet" href="css/reset.min.css" />
+		<link rel="stylesheet" href="css/popWindow.css" />
 		<link rel="stylesheet" href="css/index.css" />
+		<script type="text/javascript" src="js/popWin.js" ></script>
 		<script type="text/javascript" src="js/swiper-3.4.2.min.js" ></script>
-		<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+		<script type="text/javascript" src="js/swiper.animate1.0.3.min.js" ></script>
 		<script>
 		        (function(doc, win) {
 		            var docEl = doc.documentElement,
@@ -52,7 +55,7 @@
 					<div class="swiper-pagination"></div>
 				</div>
 			</div>
-			<div class="playVideo" data-scroll-reveal="enter top and move 50px over 1.0s">
+			<div class="playVideo" data-scroll-reveal="enter top and move 50px over 1.0s" style="display: none">
 				<div class="btnBox">
 					<div>
 						<button>播放视频</button>
@@ -203,7 +206,7 @@
 					</div>
 					<div class="btnBox btnBox1" data-scroll-reveal="enter bottom and move 50px over 1.0s" >
 						<div>
-							<button>了解更多</button>
+							<button @click="knowMore(1)">了解更多</button>
 						</div>
 					</div>
 				</div>
@@ -247,7 +250,7 @@
 					</div>
 					<div class="btnBox" data-scroll-reveal="enter bottom and move 50px over 1.0s" >
 						<div>
-							<button>了解更多</button>
+							<button @click="knowMore(2)">了解更多</button>
 						</div>
 					</div>
 				</div>
@@ -268,7 +271,7 @@
 				<div class="bottom61" data-scroll-reveal="enter top and move 50px over 1.0s">
 					<img src="img/bottom20.png"/>
 				</div>
-				<div class="btnBox" data-scroll-reveal="enter bottom and move 50px over 1.0s">
+				<div class="btnBox" data-scroll-reveal="enter bottom and move 50px over 1.0s"  style="display: none">
 					<div>
 						<button>了解更多</button>
 					</div>
@@ -396,22 +399,22 @@
 						</li>
 						<li>
 							<div class="inputBox">
-								<input placeholder="姓名" type="text"/>
+								<input placeholder="姓名" type="text" v-model="people.name"/>
 							</div>
 						</li>
 						<li>
 							<div class="inputBox">
-								<input placeholder="联系" type="number"/>
+								<input placeholder="联系" type="number" v-model="people.phone"/>
 							</div>
 						</li>
 						<li>
 							<div class="inputBox">
-								<input placeholder="地区" id="city" />
+								<input placeholder="地区" id="city" v-model="people.area"/>
 							</div>
 						</li>
 						<li>
 							<div class="submit">
-								<button>提交</button>
+								<button @click="sbt">提交</button>
 							</div>
 						</li>
 						<li>
@@ -429,6 +432,58 @@
 				<div class="bottom11">
 					<img src="img/bottom1.png" />
 				</div>
+			</div>
+			<div class="popWin" :style="{transform:'matrix(1, 0, 0, 1, 0, '+windowH1+')'}">
+				<div class="swiper-container swiper-container-nei1">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide" v-for="(item,index) in nei1">
+							<div class="produceImg"   >
+								<img :src="item.src" />
+							</div>
+							<div class="produceTitle ani" swiper-animate-effect="fadeInDown">
+								<p>{{item.title}}</p>
+							</div>
+							<div class="propBox ani" swiper-animate-effect="fadeInUp">
+								<p v-for="(its,i) in item.content">{{its}}</p>
+							</div>
+							<div class="proBar ani" swiper-animate-effect="rotateIn">
+								<img :src="item.bar" />
+							</div>
+							<div class="logo ani" swiper-animate-effect="fadeInUp">
+								<img src="img/logo.png"/>
+							</div>
+						</div>
+					</div>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination"></div>
+				</div>
+				<button class="closeBtn"  @click="closePop(1)"></button>
+			</div>
+			<div class="popWin" :style="{transform:'matrix(1, 0, 0, 1, 0, '+windowH2+')'}">
+				<div class="swiper-container swiper-container-nei2">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide" v-for="(item,index) in nei2">
+							<div class="produceImg"   >
+								<img :src="item.src" />
+							</div>
+							<div class="produceTitle ani" swiper-animate-effect="fadeInDown">
+								<p>{{item.title}}</p>
+							</div>
+							<div class="propBox ani" swiper-animate-effect="fadeInUp">
+								<p v-for="(its,i) in item.content">{{its}}</p>
+							</div>
+							<div class="proBar ani" swiper-animate-effect="rotateIn">
+								<img :src="item.bar" />
+							</div>
+							<div class="logo ani" swiper-animate-effect="fadeInUp">
+								<img src="img/logo.png"/>
+							</div>
+						</div>
+					</div>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination"></div>
+				</div>
+				<button class="closeBtn"  @click="closePop(2)"></button>
 			</div>
 		</div>
 		<script type="text/javascript" src="js/ydui.citys.js" ></script>
@@ -453,8 +508,35 @@
 			
 			        $target.on('done.ydui.cityselect', function (ret) {
 			            $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+			            app.people.area = ret.provance + ' ' + ret.city + ' ' + ret.area;
 			        });
 			    }();
+
+                var swiper = new Swiper('.swiper-container-nei1', {
+                    pagination: '.swiper-pagination',
+                    paginationClickable: true,
+                    direction: 'vertical',
+                    onInit: function(swiper){ //Swiper2.x的初始化是onFirstInit
+                        swiperAnimateCache(swiper); //隐藏动画元素
+                        swiperAnimate(swiper); //初始化完成开始动画
+                    },
+                    onSlideChangeEnd: function(swiper){
+                        swiperAnimate(swiper); //每个slide切换结束时也运行当前slide动画
+                    }
+                });
+                var swiper = new Swiper('.swiper-container-nei2', {
+                    pagination: '.swiper-pagination',
+                    paginationClickable: true,
+                    direction: 'vertical',
+                    onInit: function(swiper){ //Swiper2.x的初始化是onFirstInit
+                        swiperAnimateCache(swiper); //隐藏动画元素
+                        swiperAnimate(swiper); //初始化完成开始动画
+                    },
+                    onSlideChangeEnd: function(swiper){
+                        swiperAnimate(swiper); //每个slide切换结束时也运行当前slide动画
+                    }
+                });
+
 			});
 			var app = new Vue({
 	   			el:'#app',
@@ -643,7 +725,8 @@
 		   			},
 		   			//体验
 		   			enjoyText:'巴迪斯是业内首家真正意义上将生态概念赋予了集成吊顶产品的企业，秉承打造健康舒适新生活的主旨，在符合生态与健康要求的前提下，掌握核心科技，成功将负离子技术运用于集成吊顶，推出新型的负离子生态吊顶，创造健康自然环保的室内环境，还我们一个可以安心呼吸的空间。',
-		   			enjoy:[{
+		   			enjoy:[
+		   			    {
 		   				src:'img/bottom15.png',
 		   				title:'体验选配',
 		   				p1:'近千个产品的选配',
@@ -744,6 +827,107 @@
 		   			phone:'400-8607-757',
 		   			status:0,
 		   			pop:false,
+                    nei1:[
+                        {
+                            title:'如何让板材更具美感与实用性？',
+                            src:'img/nei15.png',
+                            content:['巴迪斯运用了最新的独立设计模具，',
+                                    '焕发轻奢系列的板材独特性。',
+                                    '如置身轻奢之境，解读现代轻奢生活新理念。',
+                                    '并且采用了亚光滚涂白技术，并辅以airGUARD空气治理技术，',
+                                    '使板材更具实用性与美感。'],
+                            bar:'img/bar15.png'
+                        },
+                        {
+                            title:'环境权威保护者？',
+                            src:'img/nei14.png',
+                            content:['airGUARD空气治理技术，使板材持续增发负氧离子，',
+                                '起到杀菌，消除甲醛、TVOC、苯、氨，',
+                                '净化空气以及降解烟雾PM2.5的作用，',
+                                '不拘泥于以往的功能特性，被赋予了灵魂的设计，',
+                                '绽放着艺术之美之余，板材更具原生态。'],
+                            bar:'img/bar14.png'
+                        },
+                        {
+                            title:'适用性MAX',
+                            src:'img/nei13.png',
+                            content:['经过23道缜密生产工序和进口的环保涂料，',
+                                '采撷天然矿石粉精华，添加活性炭等绿色辅材，',
+                                '使板材表面纹理细腻、光泽度、舒适度以及环保性能都大大提升。',
+                                '除客厅、卧室外，同样是适用于厨房、卫浴，',
+                                '绝大部分板材都适用于全屋整装。'],
+                            bar:'img/bar13.png'
+                        },
+                        {
+                            title:'更多的组合',
+                            src:'img/nei12.png',
+                            content:['为还原板材本身的天然原生态，',
+                                '巴迪斯经过汇聚业内顶尖研发团队，',
+                                '通过对消费者喜好以及适用性的调查研究，',
+                                '在空间展示以及装修设计上，拥有上百种的全屋整装方案，',
+                                '搭配出独一无二的空间格调。'],
+                            bar:'img/bar12.png'
+                        },
+						{
+                            title:'打造品质时尚家居',
+                            src:'img/nei11.png',
+                            content:['以简洁、自然的色彩为主基调，',
+                                '用时尚、精致的线条作为点缀，',
+                                '凸显简约、舒适、小资格调的美好追求，',
+                                '是打造品质时尚家居的不二选择。'],
+                            bar:'img/bar11.png'
+                        }
+                    ],
+                    nei2:[
+                        {
+                            title:'如何让纹理更逼真？',
+                            src:'img/nei24.png',
+                            content:['采用立体浮雕与表面装饰工艺（丝印、喷涂、覆膜等），',
+                                '清晰显现板材独一无二的纹理，',
+                                '随机排布的纹理、凹凸有致浮雕触感，',
+                                '营造出简练不受束缚的空间气息，',
+                                '带来宁静舒适、健康的家居体验。'],
+                            bar:'img/bar24.png'
+                        },
+                        {
+                            title:'强大的airGUARD空气治理技术',
+                            src:'img/nei23.png',
+                            content:['得益于airGUARD空气治理技术，',
+                                '板材具有了持续增发负氧离子功能，',
+                                '能起到杀菌，消除甲醛、TVOC、苯、氨，净化空气',
+                                '以及降解烟雾PM2.5的作用，',
+                                '以核心科技，打造健康舒适新生活。'],
+                            bar:'img/bar23.png'
+                        },
+                        {
+                            title:'为每一寸空间添新绿',
+                            src:'img/nei22.png',
+                            content:['采撷天然矿石粉精华，添加活性炭等绿色辅材，',
+                                '经原料预混、恒压、高温等工序、，',
+                                '高精机械化流水线生产，匠心制作而成，',
+                                '是纯天然的绿色健康生态环保新材,',
+                                '人与自然和谐共融，友好共处。'],
+                            bar:'img/bar22.png'
+                        },
+                        {
+                            title:'源于自然，创造不凡',
+                            src:'img/nei21.png',
+                            content:['负离子生态吊顶板材集实用与美观于一体，',
+                                '采用纳米技术加工而成的多层复合矿粉基础功能板，',
+                                '环保的天然基材全面提升了家装板材的优异性能，',
+                                '雕塑性的精致造型有力的展现了',
+								'表面装饰材料的美学优势。'],
+                            bar:'img/bar21.png'
+                        }
+                    ],
+                    windowH1:0,
+                    windowH2:0,
+                    people:{
+	   			        name:'',
+						phone:'',
+                        area:'',
+						token:'12138'
+					}
 		   		},
 		   		methods:{
 		   			getAward:function(){
@@ -773,6 +957,38 @@
                         _this.mpStatus = false;
                         _this.mpIndex = 0;
                         _this.prolist = _this.MoreProduce[0];
+                    },
+                    knowMore:function (i) {
+                        var _this = this;
+		   			    if(i == 1)
+						{
+                            _this.windowH1 = -$(window).height();
+						}else{
+                            _this.windowH2 = -$(window).height();
+						}
+
+
+                    },
+                    closePop:function (i) {
+						var _this = this;
+						if(i==1)
+						{
+                            _this.windowH1 = 0;
+						}else{
+                            _this.windowH2 = 0;
+						}
+
+                    },
+					sbt:function () {
+		   			    var data = this.people;
+						$.post('http://bardiss.hengdikeji.com/index.php/special/index/contact',data,function (data) {
+							if(data.status == 1)
+							{
+                                popw('温馨提示',data.msg,1);
+							}else{
+                                popw('温馨提示',data.msg,1);
+							}
+                        })
                     }
 		   		},
 		   		mounted:function(){
@@ -802,11 +1018,14 @@
                             });
                         })();
                     };
+
+
+
 		   		},
 				upDated:function () {
 
                 }
-		   	})
+		   	});
 		</script>
 		<div class="delete2" hidden="hidden"></div>
 	</body>

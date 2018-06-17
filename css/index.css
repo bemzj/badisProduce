@@ -553,4 +553,67 @@ body {
     background-image: url("../img/play.png");
     text-indent: 0.4rem; }
 
+.popWin {
+  position: fixed;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  transition: transform 0.2s linear;
+  -webkit-transition: transform 0.2s linear;
+  -moz--webkit-transition: transform 0.2s linear; }
+  .popWin .swiper-container {
+    width: 100%;
+    height: 100%; }
+    .popWin .swiper-container .swiper-slide {
+      width: 100%;
+      height: 100%;
+      background: url("../img/neiBack1.png") no-repeat left top;
+      background-size: 100% 100%;
+      -webkit-background-size: 100% 100%; }
+      .popWin .swiper-container .swiper-slide .produceImg {
+        width: 100%; }
+        .popWin .swiper-container .swiper-slide .produceImg img {
+          width: 100%; }
+      .popWin .swiper-container .swiper-slide .produceTitle p {
+        font-size: 0.4rem;
+        margin-top: -0.3rem;
+        text-align: center;
+        background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#221714), color-stop(0.45, #969696), color-stop(0.46, #221714), to(#636363));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent; }
+      .popWin .swiper-container .swiper-slide .propBox {
+        margin: 0.4rem 0 0.4rem; }
+        .popWin .swiper-container .swiper-slide .propBox p {
+          font-size: 0.2rem;
+          line-height: 0.36rem;
+          color: #3f3f3f;
+          text-align: center; }
+      .popWin .swiper-container .swiper-slide .proBar {
+        width: 1.16rem;
+        margin: 0 auto; }
+        .popWin .swiper-container .swiper-slide .proBar img {
+          width: 100%; }
+      .popWin .swiper-container .swiper-slide .logo {
+        width: 2.0rem;
+        margin: 0.4rem auto; }
+        .popWin .swiper-container .swiper-slide .logo img {
+          width: 100%; }
+    .popWin .swiper-container .swiper-slide:nth-child(2n) {
+      background-image: url("../img/neiBack2.png"); }
+  .popWin .closeBtn {
+    position: absolute;
+    width: 0.64rem;
+    height: 0.64rem;
+    left: 50%;
+    margin-left: -0.32rem;
+    bottom: 0.4rem;
+    background: url("../img/close.png") no-repeat left top;
+    background-size: 100% 100%;
+    z-index: 999; }
+  .popWin .swiper-pagination-bullet-active {
+    opacity: 1;
+    background: #3f3f3f; }
+
 /*# sourceMappingURL=index.css.map */
